@@ -1,4 +1,3 @@
-import * as React from 'react'
 import { Label, Pie, PieChart } from 'recharts'
 
 import {
@@ -14,47 +13,95 @@ import {
   ChartTooltipContent,
 } from '@/components/ui/chart'
 import { getChartDescription } from '@/utils/utils'
+import useAxios from '@/hooks/useAxios'
+import { useEffect, useMemo, useState } from 'react'
 
 export const description = 'A donut chart with text'
 
-const chartData = [
-  { category: 'chrome', expense: 275, fill: 'var(--color-chrome)' },
-  { category: 'safari', expense: 200, fill: 'var(--color-safari)' },
-  { category: 'firefox', expense: 287, fill: 'var(--color-firefox)' },
-  { category: 'edge', expense: 173, fill: 'var(--color-edge)' },
-  { category: 'other', expense: 190, fill: 'var(--color-other)' },
-]
-
 const chartConfig = {
-  expense: {
-    label: 'Expense',
+  housing: {
+    label: 'Housing',
+    color: '#E66F50',
   },
-  chrome: {
-    label: 'Chrome',
-    color: 'hsl(var(--chart-1))',
+  groceries: {
+    label: 'Groceries',
+    color: '#FF7043',
   },
-  safari: {
-    label: 'Safari',
-    color: 'hsl(var(--chart-2))',
+  transport: {
+    label: 'Transport',
+    color: '#FF5722',
   },
-  firefox: {
-    label: 'Firefox',
-    color: 'hsl(var(--chart-3))',
+  utilities: {
+    label: 'Utilities',
+    color: '#009688',
   },
-  edge: {
-    label: 'Edge',
-    color: 'hsl(var(--chart-4))',
+  healthcare: {
+    label: 'Healthcare',
+    color: '#2A9D90',
   },
-  other: {
-    label: 'Other',
-    color: 'hsl(var(--chart-5))',
+  insurance: {
+    label: 'Insurance',
+    color: '#FF9800',
+  },
+  dining: {
+    label: 'Dining',
+    color: '#FF8A65',
+  },
+  leisure: {
+    label: 'Leisure',
+    color: '#4CAF50',
+  },
+  personal_care: {
+    label: 'Personal Care',
+    color: '#81C784',
+  },
+  education: {
+    label: 'Education',
+    color: '#FF4081',
+  },
+  childcare: {
+    label: 'Childcare',
+    color: '#26C6DA',
+  },
+  taxes: {
+    label: 'Taxes',
+    color: '#9C27B0',
+  },
+  gifts: {
+    label: 'Gifts',
+    color: '#673AB7',
+  },
+  family_support: {
+    label: 'Family Support',
+    color: '#FF9800',
+  },
+  investments: {
+    label: 'Investments',
+    color: '#D32F2F',
   },
 }
 
 export function CategoriesChart() {
-  const totalExpense = React.useMemo(() => {
+  const [chartData, setChartData] = useState([])
+  const axios = useAxios()
+
+  useEffect(() => {
+    const fetchChartData = async () => {
+      try {
+        const response = await axios.get('/transaction/yearly')
+        setChartData(response.data)
+        console.log(response.data)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
+    fetchChartData()
+  }, [axios])
+
+  const totalExpense = useMemo(() => {
     return chartData.reduce((acc, curr) => acc + curr.expense, 0)
-  }, [])
+  }, [chartData])
 
   return (
     <Card className="flex flex-col">
@@ -92,7 +139,7 @@ export function CategoriesChart() {
                         <tspan
                           x={viewBox.cx}
                           y={viewBox.cy}
-                          className="fill-foreground text-3xl font-bold"
+                          className="fill-foreground text-2xl font-bold"
                         >
                           {totalExpense.toLocaleString() + '€'}
                         </tspan>
