@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const transactionSquema = z.object({
+export const transactionSchema = z.object({
   amount: z.number({ required_error: 'Amount is required' }).positive(),
   categoryId: z
     .number({ required_error: 'Category is required' })
@@ -14,3 +14,5 @@ export const transactionSquema = z.object({
   date: z.string({ required_error: 'Date is required' }),
   description: z.string().optional(),
 });
+
+export const updateTransactionSchema = transactionSchema.partial();
