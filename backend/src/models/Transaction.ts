@@ -4,6 +4,7 @@ import {
   categories,
   InsertTransaction,
   paymentMethods,
+  SelectTransaction,
   transactions,
   types,
 } from '../db/schema';
@@ -62,7 +63,7 @@ class Transaction {
   }
 
   static async getMonthlyTransactions(userId: number) {
-    const currentYear = new Date().getFullYear().toString(); // Año actual como cadena
+    const currentYear = new Date().getFullYear().toString();
     const monthsNames = [
       'Jan',
       'Feb',
@@ -126,8 +127,59 @@ class Transaction {
     return reportWithMonthNames;
   }
 
+  static async getYearlyExpensesByCategory(userId: number) {
+    const currentYear = new Date().getFullYear().toString();
+
+    const yearlyReport = await db
+      .select({
+        category: categories.name,
+        expense: sql`SUM(transactions.amount)`,
+      })
+      .from(transactions)
+      .innerJoin(categories, eq(transactions.categoryId, categories.id))
+      .where(
+        and(
+          eq(transactions.userId, userId),
+          eq(categories.type, 'expense'),
+          sql`${sql.raw(
+            `strftime('%Y', transactions.date) = '${currentYear}'`
+          )}`
+        )
+      )
+      .groupBy(categories.name);
+
+    const reportWitColors = yearlyReport.map((report) => ({
+      ...report,
+      fill: `var(--color-${report.category
+        .toLowerCase()
+        .replace(/\s+/g, '_')})`,
+    }));
+
+    return reportWitColors;
+  }
+
   static async deleteTransaction(transactionId: number) {
     await db.delete(transactions).where(eq(transactions.id, transactionId));
+  }
+
+  static async updateTransaction(
+    transactionId: number,
+    transactionData: Partial<Omit<SelectTransaction, 'id' | 'userId'>>
+  ) {
+    const date = new Date(transactionData.date as string);
+    const day = date.getDate();
+    const dayFormated = day < 10 ? `0${day}` : day;
+
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+
+    const [updatedTransaction] = await db
+      .update(transactions)
+      .set({ ...transactionData, date: `${year}-${month}-${dayFormated}` })
+      .where(eq(transactions.id, transactionId))
+      .returning();
+
+    return updatedTransaction;
   }
 }
 
