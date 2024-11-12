@@ -40,8 +40,9 @@ import {
   SelectValue,
 } from '../ui/select'
 import { transactionSchema } from '@/schemas/transactionSchema'
+import { DialogDescription } from '@radix-ui/react-dialog'
 
-const UpdateTransactionModal = ({ transactionId }) => {
+const UpdateTransactionModal = ({ transactionId, onSuccess }) => {
   const [open, setOpen] = useState(false)
   const [transaction, setTransaction] = useState({})
   const [categories, setCategories] = useState([])
@@ -61,21 +62,10 @@ const UpdateTransactionModal = ({ transactionId }) => {
   })
 
   useEffect(() => {
-    const getTransaction = async () => {
-      try {
-        const response = await axios.get(`/transaction/${transactionId}`)
-        setTransaction(response.data)
-        console.log(response.data)
-      } catch (error) {
-        console.log(error)
-      }
-    }
-
     const getCategories = async () => {
       try {
         const response = await axios.get('/category')
         setCategories(response.data)
-        console.log(response.data)
       } catch (error) {
         console.log(error)
       }
@@ -85,7 +75,6 @@ const UpdateTransactionModal = ({ transactionId }) => {
       try {
         const response = await axios.get('/payment-method')
         setPaymentMethods(response.data)
-        console.log(response.data)
       } catch (error) {
         console.log(error)
       }
@@ -93,6 +82,18 @@ const UpdateTransactionModal = ({ transactionId }) => {
 
     getCategories()
     getpaymentMethods()
+  }, [axios])
+
+  useEffect(() => {
+    const getTransaction = async () => {
+      try {
+        const response = await axios.get(`/transaction/${transactionId}`)
+        setTransaction(response.data)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
     getTransaction()
   }, [axios, transactionId])
 
@@ -114,6 +115,7 @@ const UpdateTransactionModal = ({ transactionId }) => {
       console.log(response)
       form.reset()
       setOpen(false)
+      onSuccess()
     } catch (error) {
       console.log(error)
     }
@@ -130,6 +132,9 @@ const UpdateTransactionModal = ({ transactionId }) => {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Update Tansaction</DialogTitle>
+          <DialogDescription className="hidden">
+            Update transaction
+          </DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -282,7 +287,7 @@ const UpdateTransactionModal = ({ transactionId }) => {
                     <FormLabel>Description</FormLabel>
                     <FormControl>
                       <Textarea
-                        defaultValue={transaction.description}
+                        value={transaction.description}
                         placeholder="Add a description about this transaction"
                         className="resize-none"
                         {...field}

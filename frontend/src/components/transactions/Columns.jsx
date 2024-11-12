@@ -12,7 +12,7 @@ import {
 import { DeleteTransactionModal } from './DeleteTransactionModal'
 import UpdateTransactionModal from './UpdateTransactionModal'
 
-export const columns = [
+export const columns = (getUserTransactions) => [
   // {
   //   id: 'select',
   //   header: ({ table }) => (
@@ -88,10 +88,16 @@ export const columns = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-              <DeleteTransactionModal transactionId={transaction.id} />
+              <DeleteTransactionModal
+                transactionId={transaction.id}
+                onSuccess={getUserTransactions}
+              />
             </DropdownMenuItem>
             <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-              <UpdateTransactionModal transactionId={transaction.id} />
+              <UpdateTransactionModal
+                transactionId={transaction.id}
+                onSuccess={getUserTransactions}
+              />
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

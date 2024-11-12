@@ -1,6 +1,7 @@
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -87,6 +88,9 @@ const CreateTransactionModal = ({
       <DialogContent>
         <DialogHeader>
           <DialogTitle>New Transaction</DialogTitle>
+          <DialogDescription className="hidden">
+            Create a new transaction
+          </DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -239,6 +243,7 @@ const CreateTransactionModal = ({
                     <FormLabel>Description</FormLabel>
                     <FormControl>
                       <Textarea
+                        value={field.value}
                         placeholder="Add a description about this transaction"
                         className="resize-none"
                         {...field}

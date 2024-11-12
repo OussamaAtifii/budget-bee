@@ -152,7 +152,8 @@ const TransactionPage = () => {
           />
         </div>
         <DataTable
-          columns={columns}
+          key={transactions.length}
+          columns={columns(getUserTransactions)}
           data={filteredTransactions}
           loading={loading}
         />
