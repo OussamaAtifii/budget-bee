@@ -35,3 +35,10 @@ export const getChartDescription = () => {
 
   return `January - ${monthsNames[date.getMonth()]} ${date.getFullYear()}`
 }
+
+export const formatCurrency = (number) => {
+  return number.toLocaleString(undefined, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  })
+}
