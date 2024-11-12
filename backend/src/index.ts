@@ -5,6 +5,7 @@ import categoriesRouter from './routes/categoriesRoute';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import paymentMethodRoute from './routes/paymentMethodsRoutes';
+import errorHandlerMiddleware from './middlewares/errorHandlerMiddleware';
 
 const app = express();
 const PORT = 3000;
@@ -26,6 +27,8 @@ app.use('/user', userRouter);
 app.use('/transaction', transactionRouter);
 app.use('/category', categoriesRouter);
 app.use('/payment-method', paymentMethodRoute);
+
+app.use(errorHandlerMiddleware);
 
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
