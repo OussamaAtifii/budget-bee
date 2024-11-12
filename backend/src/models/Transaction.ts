@@ -158,6 +158,21 @@ class Transaction {
     return reportWitColors;
   }
 
+  static async getTotals(userId: number) {
+    const [totals] = await db
+      .select({
+        totalExpense: sql`SUM(CASE WHEN transactions.type_id = 1 THEN transactions.amount ELSE 0 END)`,
+        totalIncome: sql`SUM(CASE WHEN transactions.type_id = 2 THEN transactions.amount ELSE 0 END)`,
+        dailyAvg: sql`
+      SUM(CASE WHEN transactions.type_id = 1 THEN transactions.amount ELSE 0 END) / NULLIF(COUNT(DISTINCT DATE(transactions.date)), 0)
+    `,
+      })
+      .from(transactions)
+      .where(and(eq(transactions.userId, userId)));
+
+    return totals;
+  }
+
   static async deleteTransaction(transactionId: number) {
     await db.delete(transactions).where(eq(transactions.id, transactionId));
   }

@@ -12,6 +12,7 @@ transactionRouter.get(
   '/yearly',
   TransactionController.getYearlyExpensesByCategory
 );
+transactionRouter.get('/totals', TransactionController.getTotals);
 transactionRouter.get('/:id', TransactionController.getTransactionById);
 
 transactionRouter.post('/create', TransactionController.create);

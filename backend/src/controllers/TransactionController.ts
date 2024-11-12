@@ -110,6 +110,22 @@ class TransactionController {
     }
   }
 
+  static async getTotals(req: Request, res: Response) {
+    const userId = Number(req.session.user?.id);
+    console.log(userId);
+
+    try {
+      const totals = await Transaction.getTotals(userId);
+      return res.status(200).json(totals);
+    } catch (error) {
+      console.log(error);
+
+      return res
+        .status(500)
+        .json({ error: 'Internal server error while fetching transaction' });
+    }
+  }
+
   // TODO: Validate that the transaction belongs to the user
   static async updateTransaction(req: Request, res: Response) {
     const userId = Number(req.session.user?.id);
