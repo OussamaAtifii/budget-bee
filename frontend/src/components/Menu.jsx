@@ -37,7 +37,7 @@ const Menu = () => {
   }
 
   return (
-    <aside className="w-64 py-6 px-4 h-full flex flex-col justify-between gap-4 transition-all duration-300 bg-[#2d3e50] text-gray-100 fixed left-0 ">
+    <aside className="w-64 py-6 px-4 h-full hidden sm:flex flex-col justify-between gap-4 transition-all duration-300 bg-[#2d3e50] text-gray-100 fixed left-0 ">
       <div className="flex flex-col gap-2">
         {menuItems.map((item, index) => (
           <MenuItem
