@@ -62,7 +62,7 @@ const DashboardPage = () => {
           <CardHeader className="pb-2">
             <CardTitle>Average Daily Expense</CardTitle>
           </CardHeader>
-          <CardContent className="text-lg font-bold">
+          <CardContent className="text-xl font-bold">
             <p>{formatCurrency(totals.dailyAvg)}€</p>
           </CardContent>
         </Card>
