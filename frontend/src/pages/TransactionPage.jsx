@@ -13,7 +13,7 @@ import { DataTable } from '@/components/transactions/DataTable'
 import useAxios from '@/hooks/useAxios'
 import { getAvatarWords } from '@/utils/utils'
 import { useEffect, useState } from 'react'
-import CreateTransactionModal from '@/components/CreateTransactionModal'
+import CreateTransactionModal from '@/components/transactions/CreateTransactionModal'
 
 const TransactionPage = () => {
   const axios = useAxios()

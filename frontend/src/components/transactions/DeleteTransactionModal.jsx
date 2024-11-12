@@ -10,6 +10,7 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import useAxios from '@/hooks/useAxios'
+import { Trash } from 'lucide-react'
 
 export function DeleteTransactionModal({ transactionId }) {
   const axios = useAxios()
@@ -25,8 +26,8 @@ export function DeleteTransactionModal({ transactionId }) {
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger>
-        <p className="hover:cursor-pointer">Delete</p>
+      <AlertDialogTrigger className="hover:cursor-pointer w-full text-left flex gap-1 items-center">
+        <Trash className="size-4" /> Delete
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

@@ -10,6 +10,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { DeleteTransactionModal } from './DeleteTransactionModal'
+import UpdateTransactionModal from './UpdateTransactionModal'
 
 export const columns = [
   // {
@@ -90,7 +91,7 @@ export const columns = [
               <DeleteTransactionModal transactionId={transaction.id} />
             </DropdownMenuItem>
             <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-              Update
+              <UpdateTransactionModal transactionId={transaction.id} />
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
