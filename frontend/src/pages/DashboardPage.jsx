@@ -52,7 +52,7 @@ const DashboardPage = () => {
         </Card>
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle>Total Expenses</CardTitle>
+            <CardTitle>Total Income</CardTitle>
           </CardHeader>
           <CardContent className="text-xl font-bold">
             <p>{formatCurrency(totals.totalIncome)}€</p>
