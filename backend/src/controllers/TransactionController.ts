@@ -185,6 +185,9 @@ class TransactionController {
       }
 
       await Transaction.deleteTransaction(transactionId);
+      return res
+        .status(200)
+        .json({ message: 'Transaction deleted successfully' });
     } catch (error) {
       console.log(error);
 
