@@ -47,7 +47,7 @@ const DashboardPage = () => {
             <CardTitle>Total Expenses</CardTitle>
           </CardHeader>
           <CardContent className="text-xl font-bold">
-            <p>{formatCurrency(totals.totalExpense)}€</p>
+            <p>{formatCurrency(totals.totalExpense || 0)}€</p>
           </CardContent>
         </Card>
         <Card>
@@ -55,7 +55,7 @@ const DashboardPage = () => {
             <CardTitle>Total Income</CardTitle>
           </CardHeader>
           <CardContent className="text-xl font-bold">
-            <p>{formatCurrency(totals.totalIncome)}€</p>
+            <p>{formatCurrency(totals.totalIncome || 0)}€</p>
           </CardContent>
         </Card>
         <Card>
@@ -63,7 +63,7 @@ const DashboardPage = () => {
             <CardTitle>Average Daily Expense</CardTitle>
           </CardHeader>
           <CardContent className="text-xl font-bold">
-            <p>{formatCurrency(totals.dailyAvg)}€</p>
+            <p>{formatCurrency(totals.dailyAvg || 0)}€</p>
           </CardContent>
         </Card>
         <div className="sm:col-span-2">
