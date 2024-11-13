@@ -21,10 +21,13 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { userLoginSchema } from '@/schemas/userSchema'
 import { Link, useNavigate } from 'react-router-dom'
 import useAxios from '@/hooks/useAxios'
+import { useState } from 'react'
+import Spinner from '@/components/Spinner'
 
 const LoginPage = () => {
   const axios = useAxios()
   const navigate = useNavigate()
+  const [loading, setLoading] = useState(false)
 
   const form = useForm({
     resolver: zodResolver(userLoginSchema),
@@ -32,6 +35,7 @@ const LoginPage = () => {
 
   const onSubmit = async (userData) => {
     try {
+      setLoading(true)
       console.log(userData)
       const response = await axios.post('/user/login', userData)
       console.log(response.data)
@@ -39,11 +43,14 @@ const LoginPage = () => {
       navigate('/')
     } catch (error) {
       console.log(error)
+    } finally {
+      setLoading(false)
     }
   }
 
   const handleDefaultCredentials = async () => {
     try {
+      setLoading(true)
       const response = await axios.post('/user/login', {
         email: 'default@default.com',
         password: '12345678',
@@ -53,6 +60,8 @@ const LoginPage = () => {
       navigate('/')
     } catch (error) {
       console.log(error)
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -101,7 +110,15 @@ const LoginPage = () => {
                   </FormItem>
                 )}
               />
-              <Button className="w-full mt-4">LOG IN</Button>
+              <Button className="w-full mt-4">
+                {loading ? (
+                  <>
+                    <Spinner /> Loading
+                  </>
+                ) : (
+                  'LOG IN'
+                )}
+              </Button>
             </form>
           </Form>
           <div className="flex flex-col gap-1 text-gray-700">

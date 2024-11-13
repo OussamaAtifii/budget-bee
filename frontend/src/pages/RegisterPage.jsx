@@ -21,10 +21,13 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { userRegisterSchema } from '@/schemas/userSchema'
 import useAxios from '@/hooks/useAxios'
 import { Link, useNavigate } from 'react-router-dom'
+import { useState } from 'react'
+import Spinner from '@/components/Spinner'
 
 const RegisterPage = () => {
   const axios = useAxios()
   const navigate = useNavigate()
+  const [loading, setLoading] = useState(false)
 
   const form = useForm({
     resolver: zodResolver(userRegisterSchema),
@@ -32,12 +35,15 @@ const RegisterPage = () => {
 
   const onSubmit = async (userData) => {
     try {
+      setLoading(true)
       const response = await axios.post('/user/register', userData)
       console.log(response.data)
       window.localStorage.setItem('email', response.data.email)
       navigate('/')
     } catch (error) {
       console.log(error)
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -105,7 +111,15 @@ const RegisterPage = () => {
                   </FormItem>
                 )}
               />
-              <Button className="w-full mt-4">REGISTER</Button>
+              <Button className="w-full mt-4">
+                {loading ? (
+                  <>
+                    <Spinner /> Loading
+                  </>
+                ) : (
+                  'LOG IN'
+                )}
+              </Button>
             </form>
           </Form>
           <div className="flex flex-col gap-1 text-gray-700">
