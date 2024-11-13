@@ -37,8 +37,29 @@ const Menu = () => {
   }
 
   return (
-    <aside className="w-64 py-6 px-4 h-full hidden sm:flex flex-col justify-between gap-4 transition-all duration-300 bg-[#2d3e50] text-gray-100 fixed left-0 ">
-      <div className="flex flex-col gap-2">
+    <>
+      <aside className="w-64 py-6 px-4 h-full hidden sm:flex flex-col justify-between gap-4 transition-all duration-300 bg-[#2d3e50] text-gray-100 fixed left-0 ">
+        <div className="flex flex-col gap-2">
+          {menuItems.map((item, index) => (
+            <MenuItem
+              key={index}
+              icon={item.icon}
+              title={item.title}
+              href={item.href}
+            />
+          ))}
+        </div>
+
+        <div className="flex flex-col gap-4">
+          <button
+            onClick={handleLogout}
+            className="p-2 hover:bg-[#425c77] rounded-xl transition duration-300 flex items-center gap-2 hover:cursor-pointer"
+          >
+            <ExitDoor /> Logout
+          </button>
+        </div>
+      </aside>
+      <nav className="sm:hidden flex justify-between p-4 w-full fixed bottom-0 bg-[#2d3e50] text-gray-100 z-10">
         {menuItems.map((item, index) => (
           <MenuItem
             key={index}
@@ -47,17 +68,14 @@ const Menu = () => {
             href={item.href}
           />
         ))}
-      </div>
-
-      <div className="flex flex-col gap-4">
         <button
           onClick={handleLogout}
           className="p-2 hover:bg-[#425c77] rounded-xl transition duration-300 flex items-center gap-2 hover:cursor-pointer"
         >
-          <ExitDoor /> Logout
+          <ExitDoor />
         </button>
-      </div>
-    </aside>
+      </nav>
+    </>
   )
 }
 

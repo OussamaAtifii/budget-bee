@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-
 import {
   flexRender,
   getCoreRowModel,
@@ -7,7 +6,6 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table'
-
 import {
   Table,
   TableBody,
@@ -16,7 +14,6 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-
 import Spinner from '../Spinner'
 import { Button } from '../ui/button'
 
@@ -44,14 +41,17 @@ export function DataTable({ columns, data, loading }) {
 
   return (
     <>
-      <div className="rounded-md border">
-        <Table>
+      <div className="overflow-auto rounded-md border">
+        <Table className="min-w-full">
           <TableHeader className="bg-[#e1e1e6]">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead
+                      key={header.id}
+                      className="whitespace-nowrap px-4 py-2"
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -83,11 +83,11 @@ export function DataTable({ columns, data, loading }) {
                   {row.getVisibleCells().map((cell) => (
                     <TableCell
                       key={cell.id}
-                      className={
+                      className={`px-4 py-2 whitespace-nowrap overflow-hidden text-ellipsis ${
                         cell.column.id === 'description'
-                          ? 'w-[300px] max-w-[300px] truncate'
-                          : ''
-                      }
+                          ? 'max-w-[300px]'
+                          : 'max-w-[150px]'
+                      }`}
                     >
                       {flexRender(
                         cell.column.columnDef.cell,
@@ -110,7 +110,7 @@ export function DataTable({ columns, data, loading }) {
           </TableBody>
         </Table>
       </div>
-      <div className="flex items-center justify-end space-x-2 py-4">
+      <div className="flex items-center justify-end space-x-2 pt-4">
         <Button
           variant="outline"
           size="sm"

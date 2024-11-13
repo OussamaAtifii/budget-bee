@@ -11,7 +11,7 @@ const MenuItem = ({ icon: Icon, title, href }) => {
       }`}
     >
       <Icon className="size-6" />
-      <span>{title}</span>
+      <span className="hidden sm:block">{title}</span>
     </Link>
   )
 }

@@ -103,15 +103,13 @@ const TransactionPage = () => {
         <h1 className="font-semibold text-3xl">Transactions</h1>
         <Avatar>
           <AvatarImage src="" />
-          <AvatarFallback>
-            {getAvatarWords('oussamaati03@gmail.com')}
-          </AvatarFallback>
+          <AvatarFallback>{getAvatarWords()}</AvatarFallback>
         </Avatar>
       </header>
 
       <div className="flex flex-col gap-2">
-        <div className="flex justify-between">
-          <div className="flex gap-2">
+        <div className="flex justify-between flex-row-reverse">
+          <div className="hidden sm:flex gap-2">
             <Select
               onValueChange={handleCategoryFilter}
               defaultValue={filters.category}
