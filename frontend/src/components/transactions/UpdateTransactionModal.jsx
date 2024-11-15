@@ -298,7 +298,7 @@ const UpdateTransactionModal = ({ transactionId, onSuccess }) => {
                 )}
               />
             </div>
-            <Button className="w-full mt-4">ADD TRANSACTION</Button>
+            <Button className="w-full mt-4">UPDATE TRANSACTION</Button>
           </form>
         </Form>
       </DialogContent>
