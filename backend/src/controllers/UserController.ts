@@ -2,12 +2,15 @@ import { NextFunction, Request, Response } from 'express';
 import UserService from '../services/UserService';
 
 class UserController {
+  // Register a new user
   static async register(req: Request, res: Response, next: NextFunction) {
     const userData = req.body;
 
     try {
+      // Get user data and token
       const { user, token } = await UserService.registerUser(userData);
 
+      // Send cookie with token
       res
         .status(201)
         .cookie('token', token, {
@@ -25,12 +28,15 @@ class UserController {
     }
   }
 
+  // Login an existing user
   static async login(req: Request, res: Response, next: NextFunction) {
     const userData = req.body;
 
     try {
+      // Get user data and token
       const { user, token } = await UserService.loginUser(userData);
 
+      // Send cookie with token
       return res
         .status(200)
         .cookie('token', token, {
@@ -48,8 +54,10 @@ class UserController {
     }
   }
 
+  // Logout a user
   static async logout(_req: Request, res: Response, next: NextFunction) {
     try {
+      // Send empty cookie
       return res
         .status(200)
         .cookie('token', '', {
